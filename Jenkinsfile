@@ -42,7 +42,7 @@ pipeline {
             steps {
                 git branch: 'main', 
                 credentialsId: 'docker-cred', 
-                url: 'https://github.com/Thakur156/cicd-end-to-end/deploy'
+                url: 'https://github.com/Thakur156/cicd-end-to-end'
             }
         }
         
@@ -54,9 +54,9 @@ pipeline {
             steps {
                 script{withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
                         sh '''
-                        sed -i "s/replaceimagetag/${BUILD_NUMBER}/g" deploy.yaml
-                        cat deploy.yaml
-                        git add deploy.yaml
+                        sed -i "s/replaceimagetag/${BUILD_NUMBER}/g" deploy/deploy.yaml
+                        cat deploy/deploy.yaml
+                        git add deploy/deploy.yaml
                         git commit -m 'Updated the deploy yaml | Jenkins Pipeline'
                         git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
                         '''                        
